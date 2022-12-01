@@ -201,7 +201,23 @@ switch ($listBox.SelectedIndex) {
         if ([System.Windows.MessageBox]::Show("This will delete all save files and settings, except save rollbacks, continue?", "Are you sure?",
                 [System.Windows.MessageBoxButton]::YesNo, [System.Windows.MessageBoxImage]::Warning) -eq "Yes") {
             try {
-                Get-Childitem -Path "$env:APPDATA/../LocalLow/GummyCat/BearAndBreakfast/" -File | Foreach-Object { Remove-Item $_.FullName };
+                New-PSDrive -Name Uninstall -PSProvider Registry -Root HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall | Out-Null;
+                $game = Get-ChildItem -Path Uninstall: | Where-Object { $_.GetValue("DisplayName") -eq "Bear and Breakfast" };
+
+                # if game is on steam, we have to do this to workaround steam cloud
+                if (($game -ne $null) -And ($game.Name.ToLower().Contains("steam"))) {
+                    # we start the game so cloud sync will not redownload the broken files
+                    Start-Process "steam://rungameid/1136370"
+                    # we then wait for the game to start running to make sure cloud sync is done
+                    do { $ProcessActive = Get-Process "BearAndBreakfast" -ErrorAction SilentlyContinue }
+                    while ($ProcessActive -eq $null)
+                }
+            }
+            catch {}
+
+            try {
+                # we MUST delete all the files, even clearning the size to 0 will break the game
+                Get-Childitem -Path "$env:APPDATA/../LocalLow/GummyCat/BearAndBreakfast/" -File | Foreach-Object { Remove-Item -Force $_.FullName };
             }
             catch {
                 [System.Windows.MessageBox]::Show("An error has occurred:`n`n$_", "Error", [System.Windows.MessageBoxButton]::Ok, [System.Windows.MessageBoxImage]::Error) | Out-Null;
