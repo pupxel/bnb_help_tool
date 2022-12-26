@@ -3,8 +3,9 @@
 This is a Powershell script containing a small set of utilities to help out Bear & Breakfast users.
 
 ## To run it:
-- Open [this](https://raw.githubusercontent.com/pupxel/bnb_help_tool/main/b%26b_help.ps1) in a new tab.
-- Hit Ctrl + S to save the script somewhere on your PC.
+- [Download](https://github.com/pupxel/bnb_help_tool/archive/refs/heads/main.zip) 
+- Right click the zip file and select "Extract All", where you put it does not matter.
+- Go into the folder you extracted it to, may be multiple folders, find `b&b_help.ps1`
 - Right click the file and select "Run with Powershell"
 
 ## Menu Options:
