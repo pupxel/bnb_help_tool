@@ -11,7 +11,7 @@ This is a Powershell script containing a small set of utilities to help out Bear
 ## Menu Options:
 - **Generate Bug Report Info**
 	This will create a data bundle that you can send to the game's developers in order to help them investigate issues.
-	This bundle will be created on your Desktop, named "b&b_bug_report_info.zip".
+	This bundle will be created in the same folder as the `b&b_help.ps1` file, named "b&b_bug_report_info.zip".
 - **Rollback Save**
 	This utility will allow you to select backup saves for a specific Game Slot, in case something bad happens with your save file.
 - **Nuke User Files**
